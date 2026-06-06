@@ -10,13 +10,19 @@ public class Player : MonoBehaviour
     [SerializeField] Collider2D playerCollider;
     [HideInInspector] public List<Node> playerPath;
 
+    TurnManager turnManager;
+
+    void Awake()
+    {
+        turnManager = FindAnyObjectByType<TurnManager>();
+    }
+
     private void Update()
     {
         GetPath();
 
-        if (move)
+        if (turnManager.TurnHappening)
         {
-            move = false;
             StartCoroutine(Move());
         }
     }

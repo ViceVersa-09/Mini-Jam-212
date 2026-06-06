@@ -7,11 +7,13 @@ public class TurnManager : MonoBehaviour
 {
     [SerializeField] GameObject stump;
     [SerializeField] GameObject bearTrap;
-    [SerializeField] int stumpPlaceLimit;
-    [SerializeField] int trapPlaceLimit;
+    [SerializeField] int stumpPlaceLimit = 5;
+    [SerializeField] int trapPlaceLimit = 5;
+    [SerializeField] int turnsRemaining = 5;
 
     bool turnHappening;
     public bool TurnHappening { get { return turnHappening; } set { turnHappening = value; } }
+    public int TurnsRemaining { get { return turnsRemaining; } set { turnsRemaining = value; } }
 
     GameObject selectedObject;
     InputAction mouseClick;
@@ -62,12 +64,19 @@ public class TurnManager : MonoBehaviour
             Instantiate(obj, MousePosition(), quaternion.identity);
             TurnStarts();
             stumpPlaceLimit--;
+            turnsRemaining--;
         }
         else if (obj == bearTrap && trapPlaceLimit > 0)
         {
             Instantiate(obj, MousePosition(), quaternion.identity);
             TurnStarts();
             trapPlaceLimit--;
+            turnsRemaining--;
+        }
+        else
+        {
+            TurnStarts();
+            turnsRemaining--;
         }
     }
 
