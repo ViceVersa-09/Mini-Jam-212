@@ -19,24 +19,32 @@ public class TurnManager : MonoBehaviour
     InputAction mouseClick;
     InputAction deselectObject;
     InputAction resetLevel;
+    InputAction waitTurn;
 
     void Awake()
     {
         mouseClick = InputSystem.actions.FindAction("MouseClick");
         deselectObject = InputSystem.actions.FindAction("DeselectObject");
         resetLevel = InputSystem.actions.FindAction("ResetLevel");
+        waitTurn = InputSystem.actions.FindAction("WaitTurn");
     }
 
     void Update()
     {
         turnHappening = false;
-        if (mouseClick.WasPerformedThisFrame())
+        if (mouseClick.WasPerformedThisFrame() && turnsRemaining > 0)
         {
             PlaceObject(selectedObject);
         }
         else if (deselectObject.WasPerformedThisFrame())
         {
             DeselectObject();
+        }
+
+        if (waitTurn.WasPerformedThisFrame())
+        {
+            TurnStarts();
+            turnsRemaining--;
         }
 
         if (resetLevel.WasPerformedThisFrame())
@@ -71,11 +79,6 @@ public class TurnManager : MonoBehaviour
             Instantiate(obj, MousePosition(), quaternion.identity);
             TurnStarts();
             trapPlaceLimit--;
-            turnsRemaining--;
-        }
-        else
-        {
-            TurnStarts();
             turnsRemaining--;
         }
     }

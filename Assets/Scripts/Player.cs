@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     {
         GetPath();
 
-        if (turnManager.TurnHappening)
+        if (turnManager.TurnHappening && turnManager.TurnsRemaining > 0)
         {
             StartCoroutine(Move());
         }
