@@ -104,6 +104,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ResetLevel",
+                    "type": "Button",
+                    "id": "af92adda-bd1a-43f2-abb1-7afd81e31f44",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -511,6 +520,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DeselectObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9396af0-3780-4039-be39-9e96919e267e",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetLevel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

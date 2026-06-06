@@ -1,6 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour
 {
@@ -15,11 +16,13 @@ public class TurnManager : MonoBehaviour
     GameObject selectedObject;
     InputAction mouseClick;
     InputAction deselectObject;
+    InputAction resetLevel;
 
     void Awake()
     {
         mouseClick = InputSystem.actions.FindAction("MouseClick");
         deselectObject = InputSystem.actions.FindAction("DeselectObject");
+        resetLevel = InputSystem.actions.FindAction("ResetLevel");
     }
 
     void Update()
@@ -32,6 +35,11 @@ public class TurnManager : MonoBehaviour
         else if (deselectObject.WasPerformedThisFrame())
         {
             DeselectObject();
+        }
+
+        if (resetLevel.WasPerformedThisFrame())
+        {
+            ResetLevel();
         }
     }
 
@@ -71,5 +79,10 @@ public class TurnManager : MonoBehaviour
     void DeselectObject()
     {
         selectedObject = null;
+    }
+
+    void ResetLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
