@@ -9,9 +9,9 @@ public class OptionsManager : MonoBehaviour
 
     private void Awake()
     {
-        masterSlider.value = PlayerPrefs.GetFloat("Master");
-        musicSlider.value = PlayerPrefs.GetFloat("Music");
-        sFXSlider.value = PlayerPrefs.GetFloat("SFX");
+        masterSlider.value = PlayerPrefs.GetFloat("Master", 1);
+        musicSlider.value = PlayerPrefs.GetFloat("Music", 1);
+        sFXSlider.value = PlayerPrefs.GetFloat("SFX", 1);
     }
 
     public void SetMaster()
@@ -27,5 +27,14 @@ public class OptionsManager : MonoBehaviour
     public void SetSFX()
     {
         PlayerPrefs.SetFloat("SFX", sFXSlider.value);
+    }
+
+    public void ResetData()
+    {
+        PlayerPrefs.DeleteAll();
+
+        masterSlider.value = PlayerPrefs.GetFloat("Master", 1);
+        musicSlider.value = PlayerPrefs.GetFloat("Music", 1);
+        sFXSlider.value = PlayerPrefs.GetFloat("SFX", 1);
     }
 }

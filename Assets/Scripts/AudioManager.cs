@@ -1,11 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     [Header("Audio Sources")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource sFXSource;
+    [SerializeField] AudioMixer audioMixer;
 
     [Header("Clips")]
     [SerializeField] AudioClip musicClip;
@@ -31,10 +33,24 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.clip = musicClip;
         musicSource.Play();
+
+        SetMixers();
     }
+
+    private void Update()
+    {
+        SetMixers();
+    }   
 
     public void PlaySFX(AudioClip sFXClip)
     {
         sFXSource.PlayOneShot(sFXClip);
+    }
+
+    void SetMixers()
+    {
+        audioMixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("Master", 1)) * 20);
+        audioMixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1)) * 20);
+        audioMixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1)) * 20);
     }
 }
