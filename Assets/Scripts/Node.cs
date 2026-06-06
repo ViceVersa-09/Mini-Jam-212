@@ -32,6 +32,7 @@ public class Node : MonoBehaviour
                         if (c.gameObject.layer == LayerMask.NameToLayer("Stump"))
                         {
                             nodeEnabled = false;
+                            return;
                         }
                         else
                         {

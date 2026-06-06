@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 912209059446896689}
   - component: {fileID: 151733712000325563}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bear Trap Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2242448535399883311}
   - component: {fileID: 6150414189658182599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bear Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,4 +159,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.0001

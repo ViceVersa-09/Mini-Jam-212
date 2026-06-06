@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7391810551527760105}
   - component: {fileID: 9101296089978517150}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stump Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1683279029088517437}
   - component: {fileID: 4373966366953605355}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,4 +159,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.4
