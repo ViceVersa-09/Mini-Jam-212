@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] Collider2D playerCollider;
     [HideInInspector] public List<Node> playerPath;
 
+    bool traped = false;
+
     TurnManager turnManager;
 
     void Awake()
@@ -21,9 +23,13 @@ public class Player : MonoBehaviour
     {
         GetPath();
 
-        if (turnManager.TurnHappening && turnManager.TurnsRemaining > 0)
+        if (turnManager.TurnHappening && turnManager.TurnsRemaining > 0 && !traped)
         {
             StartCoroutine(Move());
+        }
+        else if (turnManager.TurnHappening)
+        {
+            traped = false;
         }
     }
 
@@ -57,6 +63,15 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        LayerMask trap = LayerMask.NameToLayer("Trap");
+        if (other.gameObject.layer == trap)
+        {
+            traped = true;
         }
     }
 }
