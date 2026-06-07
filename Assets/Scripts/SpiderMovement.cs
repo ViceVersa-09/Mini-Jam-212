@@ -102,7 +102,7 @@ public class SpiderMovement : MonoBehaviour
                 spiderCollider.enabled = false;
                 while (transform.position != spiderPath[1].transform.position)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, spiderPath[1].transform.position, distance / turnManager.timeBetweenTurns * Time.deltaTime + 0.02f);
+                    transform.position = Vector2.MoveTowards(transform.position, spiderPath[1].transform.position, distance / turnManager.timeBetweenTurns * Time.deltaTime + 0.04f);
                     if (spiderPath[1].transform.position.x - transform.position.x != 0)
                     {
                         moveVector.x = Mathf.Sign(spiderPath[1].transform.position.x - transform.position.x);
