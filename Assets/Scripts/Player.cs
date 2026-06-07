@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     GameObject trapObject;
     TurnManager turnManager;
     Animator animator;
+    LineRenderer line;
     public Node finish;
 
     public Vector2 moveVector;
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     {
         turnManager = FindAnyObjectByType<TurnManager>();
         animator = GetComponentInChildren<Animator>();
+        line = GetComponent<LineRenderer>();
     }
 
     void Start()
@@ -110,8 +112,10 @@ public class Player : MonoBehaviour
             {
                 if (playerPath.Count > 1)
                 {
+                    line.positionCount = playerPath.Count;
                     for (int i = 0; i < playerPath.Count; i++)
                     {
+                        line.SetPosition(i, playerPath[i].transform.position);
                         if (i + 1 < playerPath.Count)
                         {
                             Debug.DrawLine(playerPath[i].transform.position, playerPath[i + 1].transform.position, Color.green);
