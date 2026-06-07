@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] Sprite trapActive;
     [SerializeField] Transform pathFinding;
     [SerializeField] Transform goalTransform;
     [SerializeField] float moveSpeed;
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour
     Vector2 goalPosition;
     float distance;
 
-
+    GameObject trapObject;
     TurnManager turnManager;
     Animator animator;
     public Node finish;
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour
         else if (turnManager.TurnHappening)
         {
             traped = false;
+            Destroy(trapObject);
         }
         UpdateAnimations();
         if (Time.timeSinceLevelLoad > 0.1f)
@@ -161,6 +163,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.layer == trap)
         {
             traped = true;
+            trapObject = other.gameObject;
+            trapObject.GetComponentInChildren<SpriteRenderer>().sprite = trapActive;
         }
         else if (other.gameObject.layer == spider)
         {
