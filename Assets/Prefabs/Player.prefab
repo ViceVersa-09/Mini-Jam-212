@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e993be226a97d6b459ffad1efc73636f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  trapActive: {fileID: 0}
+  trapActive: {fileID: -2797019595898416900, guid: dc08622ca00f50d4980c61e06ce84b87, type: 3}
   pathFinding: {fileID: 0}
   goalTransform: {fileID: 0}
   moveSpeed: 1
