@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class SpiderMovement : MonoBehaviour
 {
     [SerializeField] Transform pathFinding;
-    [SerializeField] float moveSpeed;
-    [SerializeField] bool move;
     [SerializeField] Collider2D spiderCollider;
     [HideInInspector] public List<Node> spiderPath;
 
@@ -15,6 +13,8 @@ public class SpiderMovement : MonoBehaviour
     Node finish;
     Vector2 moveVector;
     float distance;
+    bool movingLeft = true;
+
 
     void Awake()
     {
@@ -39,18 +39,57 @@ public class SpiderMovement : MonoBehaviour
     {
         if (finish == null)
         {
+            float smallestXValue = float.MaxValue;
+            float largestXValue = float.MinValue;
             for (int i = 0; i < pathFinding.childCount; i++)
             {
-                if (PathIsStraight(pathFinding.GetChild(i).GetComponent<Node>()))
+                Node node = pathFinding.GetChild(i).GetComponent<Node>();
+                if (node.transform.position.y == transform.position.y)
                 {
-                    finish = pathFinding.GetChild(i).GetComponent<Node>();
+                    List<Node> path = null;
+                    if (Pathfinding.Instance.spider != null)
+                    {
+                        path = Pathfinding.Instance.GeneratePath(Pathfinding.Instance.spider, node);
+                    }
+
+                    if (node.transform.position.x < smallestXValue && path != null)
+                    {
+                        smallestXValue = node.transform.position.x;
+                    }
+                    else if (node.transform.position.x > largestXValue && path != null)
+                    {
+                        largestXValue = node.transform.position.x;
+                    }
+                }
+            }
+
+            if (smallestXValue == transform.position.x)
+            {
+                movingLeft = false;
+            }
+            else if (largestXValue == transform.position.x)
+            {
+                movingLeft = true;
+            }
+
+            for (int i = 0; i < pathFinding.childCount; i++)
+            {
+                Node node = pathFinding.GetChild(i).GetComponent<Node>();
+                if (ValidPath(node) && node.transform.position.x == smallestXValue && movingLeft)
+                {
+                    finish = node;
+                    return;
+                }
+                else if (ValidPath(node) && node.transform.position.x == largestXValue && !movingLeft)
+                {
+                    finish = node;
                     return;
                 }
             }
         }
     }
 
-    bool PathIsStraight(Node finish)
+    bool ValidPath(Node finish)
     {
         List<Node> path;
         if (Pathfinding.Instance.spider != null)
