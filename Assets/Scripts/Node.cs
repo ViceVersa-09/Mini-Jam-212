@@ -42,6 +42,10 @@ public class Node : MonoBehaviour
                         {
                             Pathfinding.Instance.player = this;
                         }
+                        else if (c.gameObject.layer == LayerMask.NameToLayer("Spider"))
+                        {
+                            Pathfinding.Instance.spider = this;
+                        }
                     }
                 }
             }

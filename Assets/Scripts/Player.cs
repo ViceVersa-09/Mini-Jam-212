@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] Node finish;
+    [SerializeField] Transform pathFinding;
+    [SerializeField] Vector2 goalPosition;
     [SerializeField] float moveSpeed;
     [SerializeField] bool move;
     [SerializeField] Collider2D playerCollider;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     bool traped = false;
 
     TurnManager turnManager;
+    public Node finish;
 
     void Awake()
     {
@@ -21,9 +23,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        FindNode();
         GetPath();
 
-        if (turnManager.TurnHappening && turnManager.TurnsRemaining > 0 && !traped)
+        if (turnManager.TurnHappening && !traped)
         {
             StartCoroutine(Move());
         }
@@ -33,9 +36,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    void FindNode()
+    {
+        if (finish == null)
+        {
+            for (int i = 0; i < pathFinding.childCount; i++)
+            {
+                if ((Vector2)pathFinding.GetChild(i).transform.position == goalPosition)
+                {
+                    finish = pathFinding.GetChild(i).GetComponent<Node>();
+                }
+            }
+        }
+    }
+
     IEnumerator Move()
     {
-        if (1 < playerPath.Count)
+        if (playerPath.Count > 1)
         {
             playerCollider.enabled = false;
             while (transform.position != playerPath[1].transform.position)
