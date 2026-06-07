@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         FindNode();
         GetPath();
 
-        if (turnManager.TurnHappening && !traped && playerPath != null)
+        if (turnManager.TurnHappening && !traped)
         {
             StartCoroutine(Move());
         }
@@ -62,26 +62,32 @@ public class Player : MonoBehaviour
 
     IEnumerator Move()
     {
-        if (playerPath.Count > 1)
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        if (playerPath != null)
         {
-            playerCollider.enabled = false;
-            while (transform.position != playerPath[1].transform.position)
+            if (playerPath.Count > 1)
             {
-                float speed = Vector2.Distance(transform.position, playerPath[1].transform.position) * moveSpeed;
-                transform.position = Vector2.MoveTowards(transform.position, playerPath[1].transform.position, Mathf.Clamp(speed, moveSpeed / 50, 1));
-                if (playerPath[1].transform.position.x - transform.position.x != 0)
+                playerCollider.enabled = false;
+                while (transform.position != playerPath[1].transform.position)
                 {
-                    moveVector.x = Mathf.Sign(playerPath[1].transform.position.x - transform.position.x);
+                    float speed = Vector2.Distance(transform.position, playerPath[1].transform.position) * moveSpeed;
+                    transform.position = Vector2.MoveTowards(transform.position, playerPath[1].transform.position, Mathf.Clamp(speed, moveSpeed / 50, 1));
+                    if (playerPath[1].transform.position.x - transform.position.x != 0)
+                    {
+                        moveVector.x = Mathf.Sign(playerPath[1].transform.position.x - transform.position.x);
+                    }
+                    if (playerPath[1].transform.position.y - transform.position.y != 0)
+                    {
+                        moveVector.y = Mathf.Sign(playerPath[1].transform.position.y - transform.position.y);
+                    }
+                    yield return new WaitForEndOfFrame();
                 }
-                if (playerPath[1].transform.position.y - transform.position.y != 0)
-                {
-                    moveVector.y = Mathf.Sign(playerPath[1].transform.position.y - transform.position.y);
-                }
-                yield return new WaitForEndOfFrame();
+                playerCollider.enabled = true;
+                moveVector = Vector2.zero;
             }
-            playerCollider.enabled = true;
-            moveVector = Vector2.zero;
         }
+
     }
 
     void GetPath()
