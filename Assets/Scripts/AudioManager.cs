@@ -14,7 +14,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip button;
     [SerializeField] public AudioClip log;
     [SerializeField] public AudioClip trap;
-    [SerializeField] public AudioClip spider;
+    [SerializeField] public AudioClip lose;
+    [SerializeField] public AudioClip win;
+    [SerializeField] public AudioClip walk;
 
     public static AudioManager instance;
 

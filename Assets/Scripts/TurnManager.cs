@@ -9,8 +9,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] GameObject bearTrap;
     [SerializeField] Player player;
     [SerializeField] Pathfinding pathfinding;
-    [SerializeField] int stumpPlaceLimit = 5;
-    [SerializeField] int trapPlaceLimit = 5;
+    [SerializeField] public int stumpPlaceLimit = 5;
+    [SerializeField] public int trapPlaceLimit = 5;
     public float timeBetweenTurns = 0.5f;
 
     bool turnHappening;

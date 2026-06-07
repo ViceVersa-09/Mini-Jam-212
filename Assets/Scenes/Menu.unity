@@ -2631,7 +2631,9 @@ MonoBehaviour:
   button: {fileID: 8300000, guid: 9efe8f911d775404b98cccf77a9932a4, type: 3}
   log: {fileID: 8300000, guid: 6c2fb0acd64f2af42bfafbc43060257e, type: 3}
   trap: {fileID: 8300000, guid: 7d58d58f27ee76c4bb239eff99f392fc, type: 3}
-  spider: {fileID: 8300000, guid: 7198c4a7478aaf94e88825fbf83b6bce, type: 3}
+  lose: {fileID: 8300000, guid: d5d1cb522c38ee2479caf608f279f4c4, type: 3}
+  win: {fileID: 8300000, guid: 4751bce0e27e2d64898cc3f17f7817fd, type: 3}
+  walk: {fileID: 8300000, guid: c690fd2d3dc493f4db79a051f0d23c5e, type: 3}
 --- !u!1 &1304808915
 GameObject:
   m_ObjectHideFlags: 0
