@@ -534,6 +534,7 @@ MonoBehaviour:
   moveSpeed: 0.1
   move: 0
   playerCollider: {fileID: 686327432}
+  nextLevel: {fileID: 1326346583}
   playerPath: []
   finish: {fileID: 0}
 --- !u!4 &686327431
@@ -1339,6 +1340,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 992353803}
+  - {fileID: 1326346584}
   - {fileID: 1945270296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

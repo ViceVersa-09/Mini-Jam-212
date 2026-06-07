@@ -26,6 +26,7 @@ public class SpiderMovement : MonoBehaviour
         {
             StartCoroutine(Move());
         }
+        finish = null;
     }
 
     void FindFinish()
@@ -45,23 +46,23 @@ public class SpiderMovement : MonoBehaviour
 
     bool PathIsStraight(Node finish)
     {
-        List<Node> path = new();
+        List<Node> path;
         if (Pathfinding.Instance.spider != null)
         {
             path = Pathfinding.Instance.GeneratePath(Pathfinding.Instance.spider, finish);
+        }
+        else
+        {
+            return false;
         }
         if (path != null)
         {
             for (int i = 0; i < path.Count; i++)
             {
-                if (path[i].transform.position.y != transform.position.y || path[i].cameFrom.transform.position.x == transform.position.x)
+                if (path[i].transform.position.y != transform.position.y || path[^1].transform.position == transform.position)
                 {
                     return false;
                 }
-            }
-            for (int i = 0; i < path.Count; i++)
-            {
-                Debug.Log(path[i]);
             }
             return true;
         }
@@ -85,7 +86,7 @@ public class SpiderMovement : MonoBehaviour
 
     void GetPath()
     {
-        if (finish != null && Pathfinding.Instance.spider != null)
+        if (finish != null && Pathfinding.Instance.spider != null && spiderCollider.isActiveAndEnabled)
         {
             spiderPath = Pathfinding.Instance.GeneratePath(Pathfinding.Instance.spider, finish);
             if (spiderPath.Count > 1)

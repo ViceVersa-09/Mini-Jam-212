@@ -1,17 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] Transform pathFinding;
-    [SerializeField] Vector2 goalPosition;
+    [SerializeField] Transform goalTransform;
     [SerializeField] float moveSpeed;
     [SerializeField] bool move;
     [SerializeField] Collider2D playerCollider;
+    [SerializeField] GameObject nextLevel;
     [HideInInspector] public List<Node> playerPath;
 
     bool traped = false;
+    Vector2 goalPosition;
 
     TurnManager turnManager;
     Animator animator;
@@ -23,6 +26,7 @@ public class Player : MonoBehaviour
     {
         turnManager = FindAnyObjectByType<TurnManager>();
         animator = GetComponentInChildren<Animator>();
+        goalPosition = goalTransform.position;
     }
 
     private void Update()
@@ -30,7 +34,7 @@ public class Player : MonoBehaviour
         FindNode();
         GetPath();
 
-        if (turnManager.TurnHappening && !traped)
+        if (turnManager.TurnHappening && !traped && playerPath != null)
         {
             StartCoroutine(Move());
         }
@@ -39,6 +43,7 @@ public class Player : MonoBehaviour
             traped = false;
         }
         UpdateAnimations();
+        PlayerWon();
     }
 
     void FindNode()
@@ -84,13 +89,16 @@ public class Player : MonoBehaviour
         if (finish != null && Pathfinding.Instance.player != null)
         {
             playerPath = Pathfinding.Instance.GeneratePath(Pathfinding.Instance.player, finish);
-            if (playerPath.Count > 1)
+            if (playerPath != null)
             {
-                for (int i = 0; i < playerPath.Count; i++)
+                if (playerPath.Count > 1)
                 {
-                    if (i + 1 < playerPath.Count)
+                    for (int i = 0; i < playerPath.Count; i++)
                     {
-                        Debug.DrawLine(playerPath[i].transform.position, playerPath[i + 1].transform.position, Color.green);
+                        if (i + 1 < playerPath.Count)
+                        {
+                            Debug.DrawLine(playerPath[i].transform.position, playerPath[i + 1].transform.position, Color.green);
+                        }
                     }
                 }
             }
@@ -120,13 +128,29 @@ public class Player : MonoBehaviour
             animator.SetInteger("State", 1);
         }
     }
+    void PlayerWon()
+    {
+        if (playerPath != null)
+        {
+            if (transform.position == playerPath[^1].transform.position)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         LayerMask trap = LayerMask.NameToLayer("Trap");
+        LayerMask spider = LayerMask.NameToLayer("Spider");
         if (other.gameObject.layer == trap)
         {
             traped = true;
+        }
+        else if (other.gameObject.layer == spider)
+        {
+            nextLevel.SetActive(true);
+            turnManager.LevelComplete = true;
         }
     }
 }
