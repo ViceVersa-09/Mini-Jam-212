@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     bool traped = false;
 
     TurnManager turnManager;
-    Node finish;
+    public Node finish;
 
     void Awake()
     {
@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
                 if ((Vector2)pathFinding.GetChild(i).transform.position == goalPosition)
                 {
                     finish = pathFinding.GetChild(i).GetComponent<Node>();
-                    Debug.Log(pathFinding.GetChild(i).GetComponent<Node>());
                 }
             }
         }

@@ -767,7 +767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &365792227
 Transform:
   m_ObjectHideFlags: 0
@@ -819,7 +819,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.4
 --- !u!114 &365792229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1054,6 +1054,7 @@ MonoBehaviour:
   move: 0
   playerCollider: {fileID: 686327432}
   playerPath: []
+  finish: {fileID: 0}
 --- !u!4 &686327431
 Transform:
   m_ObjectHideFlags: 0
@@ -2007,7 +2008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 500, y: 100}
+  m_AnchoredPosition: {x: 200, y: 300}
   m_SizeDelta: {x: 250, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945270297
@@ -2322,6 +2323,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurnManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7380067516317907744, guid: 4115111e3f152d042a75d6f494f6206b, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 686327430}
+    - target: {fileID: 7380067516317907744, guid: 4115111e3f152d042a75d6f494f6206b, type: 3}
+      propertyPath: pathfinding
+      value: 
+      objectReference: {fileID: 673015622}
     - target: {fileID: 7380067516317907744, guid: 4115111e3f152d042a75d6f494f6206b, type: 3}
       propertyPath: trapPlaceLimit
       value: 0

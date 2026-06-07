@@ -29,7 +29,7 @@ public class Node : MonoBehaviour
                 {
                     if (c != null)
                     {
-                        if (c.gameObject.layer == LayerMask.NameToLayer("Stump") || c.gameObject.layer == LayerMask.NameToLayer("Spider"))
+                        if (c.gameObject.layer == LayerMask.NameToLayer("Stump"))
                         {
                             nodeEnabled = false;
                             return;

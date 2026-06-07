@@ -5,8 +5,8 @@ public class Pathfinding : MonoBehaviour
 {
     [Header("Grid Settings")]
     [SerializeField] Vector2 gridOffset = new Vector2(0.5f, 0.5f);
-    [SerializeField] Vector2 minBounds;
-    [SerializeField] Vector2 maxBounds;
+    public Vector2 minBounds;
+    public Vector2 maxBounds;
     [SerializeField] GameObject NodePrefab;
     [Header("Testing Setttings")]
     [SerializeField] Node testStart;

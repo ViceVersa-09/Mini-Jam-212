@@ -20,29 +20,52 @@ public class SpiderMovement : MonoBehaviour
 
     private void Update()
     {
-        FindNode((Vector2)transform.position + Vector2.left);
-        FindNode((Vector2)transform.position + Vector2.right);
+        FindFinish();
         GetPath();
-
         if (turnManager.TurnHappening)
         {
             StartCoroutine(Move());
         }
     }
 
-    void FindNode(Vector2 position)
+    void FindFinish()
     {
         if (finish == null)
         {
             for (int i = 0; i < pathFinding.childCount; i++)
             {
-                if ((Vector2)pathFinding.GetChild(i).transform.position == position)
+                if (PathIsStraight(pathFinding.GetChild(i).GetComponent<Node>()))
                 {
                     finish = pathFinding.GetChild(i).GetComponent<Node>();
-                    Debug.Log(pathFinding.GetChild(i).transform.position);
+                    return;
                 }
             }
         }
+    }
+
+    bool PathIsStraight(Node finish)
+    {
+        List<Node> path = new();
+        if (Pathfinding.Instance.spider != null)
+        {
+            path = Pathfinding.Instance.GeneratePath(Pathfinding.Instance.spider, finish);
+        }
+        if (path != null)
+        {
+            for (int i = 0; i < path.Count; i++)
+            {
+                if (path[i].transform.position.y != transform.position.y || path[i].cameFrom.transform.position.x == transform.position.x)
+                {
+                    return false;
+                }
+            }
+            for (int i = 0; i < path.Count; i++)
+            {
+                Debug.Log(path[i]);
+            }
+            return true;
+        }
+        return false;
     }
 
     IEnumerator Move()

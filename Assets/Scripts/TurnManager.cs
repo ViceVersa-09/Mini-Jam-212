@@ -8,6 +8,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField] GameObject stump;
     [SerializeField] GameObject bearTrap;
     [SerializeField] Player player;
+    [SerializeField] Pathfinding pathfinding;
     [SerializeField] int stumpPlaceLimit = 5;
     [SerializeField] int trapPlaceLimit = 5;
     [SerializeField] float timeBetweenTurns = 0.5f;
@@ -91,7 +92,7 @@ public class TurnManager : MonoBehaviour
         else if (obj == bearTrap && trapPlaceLimit > 0)
         {
             GameObject placedObject = Instantiate(obj, MousePosition(), quaternion.identity);
-            if (player.playerPath == null)
+            if (pathfinding.GeneratePath(Pathfinding.Instance.player, player.finish) == null)
             {
                 Destroy(placedObject);
                 return;
