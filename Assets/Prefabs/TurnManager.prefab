@@ -46,5 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   stump: {fileID: 5424504016520598653, guid: aa7dcde7b26f2354ca87f626dded177a, type: 3}
   bearTrap: {fileID: 7619244344259682896, guid: 74ae2e167e0bebf4fba476357ee73777, type: 3}
+  player: {fileID: 0}
+  cursorSprites:
+  - {fileID: 2800000, guid: 951973e26ac88a943a60f9d091103b3e, type: 3}
+  - {fileID: 2800000, guid: 90e4eee150a3948459af103597215af5, type: 3}
+  - {fileID: 2800000, guid: d2c562728f368574384491ac23d97483, type: 3}
+  cursorHotSpots:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  pathfinding: {fileID: 0}
   stumpPlaceLimit: 5
   trapPlaceLimit: 5
+  timeBetweenTurns: 0.5

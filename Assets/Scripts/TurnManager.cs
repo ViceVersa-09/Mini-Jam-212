@@ -8,6 +8,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] GameObject stump;
     [SerializeField] GameObject bearTrap;
     [SerializeField] Player player;
+    [SerializeField] Texture2D[] cursorSprites;
+    [SerializeField] Vector2[] cursorHotSpots;
     [SerializeField] Pathfinding pathfinding;
     [SerializeField] public int stumpPlaceLimit = 5;
     [SerializeField] public int trapPlaceLimit = 5;
@@ -40,6 +42,11 @@ public class TurnManager : MonoBehaviour
         audioManager = FindAnyObjectByType<AudioManager>();
     }
 
+    void Start()
+    {
+        Cursor.SetCursor(cursorSprites[0], cursorHotSpots[0], CursorMode.Auto);
+    }
+
     void Update()
     {
         turnHappening = false;
@@ -57,7 +64,7 @@ public class TurnManager : MonoBehaviour
             {
                 DeselectObject();
             }
-            else if (waitTurn.WasPerformedThisFrame() && hasWaited2)
+            else if (waitTurn.WasPerformedThisFrame() && hasWaited2 && stumpPlaceLimit > 0 && trapPlaceLimit > 0)
             {
                 TurnStarts();
                 hasWaited2 = false;
@@ -149,11 +156,21 @@ public class TurnManager : MonoBehaviour
         {
             audioManager.PlaySFX(audioManager.button);
         }
+
+        if (obj == stump)
+        {
+            Cursor.SetCursor(cursorSprites[1], cursorHotSpots[1], CursorMode.Auto);
+        }
+        else if (obj == bearTrap)
+        {
+            Cursor.SetCursor(cursorSprites[2], cursorHotSpots[2], CursorMode.Auto);
+        }
     }
 
     void DeselectObject()
     {
         selectedObject = null;
+        Cursor.SetCursor(cursorSprites[0], cursorHotSpots[0], CursorMode.Auto);
     }
 
     public void ResetLevel()
