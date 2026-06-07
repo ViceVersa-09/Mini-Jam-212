@@ -10,11 +10,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
 
     [Header("Clips")]
-    [SerializeField] AudioClip music;
-    [SerializeField] AudioClip button;
-    [SerializeField] AudioClip log;
-    [SerializeField] AudioClip trap;
-    [SerializeField] AudioClip spider;
+    [SerializeField] public AudioClip music;
+    [SerializeField] public AudioClip button;
+    [SerializeField] public AudioClip log;
+    [SerializeField] public AudioClip trap;
+    [SerializeField] public AudioClip spider;
 
     public static AudioManager instance;
 

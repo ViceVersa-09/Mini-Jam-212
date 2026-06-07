@@ -7,11 +7,18 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider sFXSlider;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         masterSlider.value = PlayerPrefs.GetFloat("Master", 1);
         musicSlider.value = PlayerPrefs.GetFloat("Music", 1);
         sFXSlider.value = PlayerPrefs.GetFloat("SFX", 1);
+    }
+
+    private void Start()
+    {
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     public void SetMaster()
@@ -36,5 +43,7 @@ public class OptionsManager : MonoBehaviour
         masterSlider.value = PlayerPrefs.GetFloat("Master", 1);
         musicSlider.value = PlayerPrefs.GetFloat("Music", 1);
         sFXSlider.value = PlayerPrefs.GetFloat("SFX", 1);
+
+        audioManager.PlaySFX(audioManager.button);
     }
 }
