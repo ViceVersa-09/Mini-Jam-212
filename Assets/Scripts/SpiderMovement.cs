@@ -52,11 +52,11 @@ public class SpiderMovement : MonoBehaviour
                         path = Pathfinding.Instance.GeneratePath(Pathfinding.Instance.spider, node);
                     }
 
-                    if (node.transform.position.x < smallestXValue && path != null)
+                    if (node.transform.position.x < smallestXValue && path != null && ValidPath(node))
                     {
                         smallestXValue = node.transform.position.x;
                     }
-                    else if (node.transform.position.x > largestXValue && path != null)
+                    else if (node.transform.position.x > largestXValue && path != null && ValidPath(node))
                     {
                         largestXValue = node.transform.position.x;
                     }
@@ -68,6 +68,14 @@ public class SpiderMovement : MonoBehaviour
                 movingLeft = false;
             }
             else if (largestXValue == transform.position.x)
+            {
+                movingLeft = true;
+            }
+            else if (smallestXValue > transform.position.x)
+            {
+                movingLeft = false;
+            }
+            else if (largestXValue < transform.position.x)
             {
                 movingLeft = true;
             }
