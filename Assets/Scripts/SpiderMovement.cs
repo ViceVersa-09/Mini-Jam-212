@@ -11,21 +11,27 @@ public class SpiderMovement : MonoBehaviour
     [HideInInspector] public List<Node> spiderPath;
 
     TurnManager turnManager;
+    Animator animator;
     Node finish;
+    Vector2 moveVector;
+    float distance;
 
     void Awake()
     {
         turnManager = FindAnyObjectByType<TurnManager>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
         FindFinish();
         GetPath();
-        if (turnManager.TurnHappening)
+        if (turnManager.TurnHappening && spiderPath != null)
         {
+            distance = Vector2.Distance(transform.position, spiderPath[1].transform.position);
             StartCoroutine(Move());
         }
+        UpdateAnimations();
         finish = null;
     }
 
@@ -69,18 +75,43 @@ public class SpiderMovement : MonoBehaviour
         return false;
     }
 
+    void UpdateAnimations()
+    {
+        if (moveVector == Vector2.zero) // Idle
+        {
+            animator.SetInteger("State", 0);
+        }
+        else if (moveVector.x > 0) // Right
+        {
+            animator.SetInteger("State", 1);
+        }
+        else if (moveVector.x < 0) // Left
+        {
+            animator.SetInteger("State", 2);
+        }
+    }
+
     IEnumerator Move()
     {
-        if (spiderPath.Count > 1)
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        if (spiderPath != null)
         {
-            spiderCollider.enabled = false;
-            while (transform.position != spiderPath[1].transform.position)
+            if (spiderPath.Count > 1)
             {
-                float speed = Vector2.Distance(transform.position, spiderPath[1].transform.position) * moveSpeed;
-                transform.position = Vector2.MoveTowards(transform.position, spiderPath[1].transform.position, Mathf.Clamp(speed, moveSpeed / 50, 1));
-                yield return new WaitForEndOfFrame();
+                spiderCollider.enabled = false;
+                while (transform.position != spiderPath[1].transform.position)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, spiderPath[1].transform.position, distance / turnManager.timeBetweenTurns * Time.deltaTime + 0.01f);
+                    if (spiderPath[1].transform.position.x - transform.position.x != 0)
+                    {
+                        moveVector.x = Mathf.Sign(spiderPath[1].transform.position.x - transform.position.x);
+                    }
+                    yield return new WaitForEndOfFrame();
+                }
+                spiderCollider.enabled = true;
+                moveVector = Vector2.zero;
             }
-            spiderCollider.enabled = true;
         }
     }
 

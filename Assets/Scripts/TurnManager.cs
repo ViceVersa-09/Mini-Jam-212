@@ -11,7 +11,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField] Pathfinding pathfinding;
     [SerializeField] int stumpPlaceLimit = 5;
     [SerializeField] int trapPlaceLimit = 5;
-    [SerializeField] float timeBetweenTurns = 0.5f;
+    public float timeBetweenTurns = 0.5f;
 
     bool turnHappening;
     public bool TurnHappening { get { return turnHappening; } set { turnHappening = value; } }

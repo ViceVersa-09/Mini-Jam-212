@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     bool traped = false;
     Vector2 goalPosition;
+    float distance;
+
 
     TurnManager turnManager;
     Animator animator;
@@ -26,6 +28,10 @@ public class Player : MonoBehaviour
     {
         turnManager = FindAnyObjectByType<TurnManager>();
         animator = GetComponentInChildren<Animator>();
+    }
+
+    void Start()
+    {
         goalPosition = goalTransform.position;
     }
 
@@ -34,8 +40,9 @@ public class Player : MonoBehaviour
         FindNode();
         GetPath();
 
-        if (turnManager.TurnHappening && !traped)
+        if (turnManager.TurnHappening && !traped && playerPath != null)
         {
+            distance = Vector2.Distance(transform.position, playerPath[1].transform.position);
             StartCoroutine(Move());
         }
         else if (turnManager.TurnHappening)
@@ -43,7 +50,10 @@ public class Player : MonoBehaviour
             traped = false;
         }
         UpdateAnimations();
-        PlayerWon();
+        if (Time.timeSinceLevelLoad > 0.1f)
+        {
+            PlayerWon();
+        }
     }
 
     void FindNode()
@@ -71,8 +81,7 @@ public class Player : MonoBehaviour
                 playerCollider.enabled = false;
                 while (transform.position != playerPath[1].transform.position)
                 {
-                    float speed = Vector2.Distance(transform.position, playerPath[1].transform.position) * moveSpeed;
-                    transform.position = Vector2.MoveTowards(transform.position, playerPath[1].transform.position, Mathf.Clamp(speed, moveSpeed / 50, 1));
+                    transform.position = Vector2.MoveTowards(transform.position, playerPath[1].transform.position, distance / turnManager.timeBetweenTurns * Time.deltaTime + 0.01f);
                     if (playerPath[1].transform.position.x - transform.position.x != 0)
                     {
                         moveVector.x = Mathf.Sign(playerPath[1].transform.position.x - transform.position.x);
