@@ -20,7 +20,9 @@ public class TurnManager : MonoBehaviour
     int turnCount = 0;
     public int TurnCount { get { return turnCount; } set { turnCount = value; } }
     bool hasWaited = true;
+    bool hasWaited2 = true;
     float timeWaited = 0;
+    float timeWaited2 = 0;
 
     GameObject selectedObject;
     InputAction mouseClick;
@@ -53,10 +55,10 @@ public class TurnManager : MonoBehaviour
             {
                 DeselectObject();
             }
-
-            if (waitTurn.WasPerformedThisFrame())
+            else if (waitTurn.WasPerformedThisFrame() && hasWaited2)
             {
                 TurnStarts();
+                hasWaited2 = false;
             }
 
             if (resetLevel.WasPerformedThisFrame())
@@ -65,6 +67,7 @@ public class TurnManager : MonoBehaviour
             }
 
             WaitBeforeNextTurn();
+            WaitBeforeNextTurn2();
         }
 
     }
@@ -114,6 +117,16 @@ public class TurnManager : MonoBehaviour
         else
         {
             hasWaited = false;
+        }
+    }
+
+    void WaitBeforeNextTurn2()
+    {
+        timeWaited2 += Time.deltaTime;
+        if (timeWaited2 >= timeBetweenTurns)
+        {
+            hasWaited2 = true;
+            timeWaited2 = 0;
         }
     }
 
