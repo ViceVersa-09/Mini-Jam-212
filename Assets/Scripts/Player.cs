@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     Animator animator;
     LineRenderer line;
     public Node finish;
+    AudioManager audioManager;
 
     public Vector2 moveVector;
 
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
         turnManager = FindAnyObjectByType<TurnManager>();
         animator = GetComponentInChildren<Animator>();
         line = GetComponent<LineRenderer>();
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     void Start()
@@ -101,6 +103,10 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (audioManager != null)
+        {
+            audioManager.PlaySFX(audioManager.walk);
+        }
     }
 
     void GetPath()
@@ -155,6 +161,10 @@ public class Player : MonoBehaviour
         {
             if (transform.position == playerPath[^1].transform.position)
             {
+                if (audioManager != null)
+                {
+                    audioManager.PlaySFX(audioManager.lose);
+                }              
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
@@ -174,6 +184,10 @@ public class Player : MonoBehaviour
         {
             nextLevel.SetActive(true);
             turnManager.LevelComplete = true;
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.win);
+            }
         }
     }
 }

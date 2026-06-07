@@ -1435,6 +1435,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectSelector
       objectReference: {fileID: 0}
+    - target: {fileID: 5642546694180677515, guid: 5d5ee598dacb620449ab5a7f50711c3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 764573450}
+    - target: {fileID: 5642546694180677515, guid: 5d5ee598dacb620449ab5a7f50711c3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNextLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 6584178742497737567, guid: 5d5ee598dacb620449ab5a7f50711c3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1536,6 +1544,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5ee598dacb620449ab5a7f50711c3d, type: 3}
+--- !u!1 &1493036511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8955132633893849823, guid: 5d5ee598dacb620449ab5a7f50711c3d, type: 3}
+  m_PrefabInstance: {fileID: 1493036510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1523174424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2132,7 +2145,7 @@ PrefabInstance:
     - target: {fileID: 5687365553340495633, guid: 62ee26cca42f46d4b9c2c10f1f12a0ae, type: 3}
       propertyPath: nextLevel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1493036511}
     - target: {fileID: 5687365553340495633, guid: 62ee26cca42f46d4b9c2c10f1f12a0ae, type: 3}
       propertyPath: pathFinding
       value: 

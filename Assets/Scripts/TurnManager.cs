@@ -29,6 +29,7 @@ public class TurnManager : MonoBehaviour
     InputAction deselectObject;
     InputAction resetLevel;
     InputAction waitTurn;
+    AudioManager audioManager;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class TurnManager : MonoBehaviour
         deselectObject = InputSystem.actions.FindAction("DeselectObject");
         resetLevel = InputSystem.actions.FindAction("ResetLevel");
         waitTurn = InputSystem.actions.FindAction("WaitTurn");
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     void Update()
@@ -97,12 +99,22 @@ public class TurnManager : MonoBehaviour
             }
             TurnStarts();
             stumpPlaceLimit--;
+
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.log);
+            }
         }
         else if (obj == bearTrap && trapPlaceLimit > 0)
         {
             Instantiate(obj, MousePosition(), quaternion.identity);
             TurnStarts();
             trapPlaceLimit--;
+
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.trap);
+            }
         }
     }
 
@@ -133,6 +145,10 @@ public class TurnManager : MonoBehaviour
     public void SelectedObject(GameObject obj)
     {
         selectedObject = obj;
+        if (audioManager != null)
+        {
+            audioManager.PlaySFX(audioManager.button);
+        }
     }
 
     void DeselectObject()
@@ -142,11 +158,21 @@ public class TurnManager : MonoBehaviour
 
     public void ResetLevel()
     {
+        if (audioManager != null)
+        {
+            audioManager.PlaySFX(audioManager.lose);
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void LoadNextLevel()
     {
+        if (audioManager != null)
+        {
+            audioManager.PlaySFX(audioManager.button);
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
