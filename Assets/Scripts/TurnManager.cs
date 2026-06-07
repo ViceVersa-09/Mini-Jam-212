@@ -64,7 +64,7 @@ public class TurnManager : MonoBehaviour
             {
                 DeselectObject();
             }
-            else if (waitTurn.WasPerformedThisFrame() && hasWaited2 && stumpPlaceLimit > 0 && trapPlaceLimit > 0)
+            else if (waitTurn.WasPerformedThisFrame() && hasWaited2/* && stumpPlaceLimit > 0 && trapPlaceLimit > 0*/)
             {
                 TurnStarts();
                 hasWaited2 = false;
