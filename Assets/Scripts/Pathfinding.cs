@@ -15,6 +15,7 @@ public class Pathfinding : MonoBehaviour
     public List<Node> result;
 
     public Node player;
+    public Node spider;
 
     public static Pathfinding Instance;
     List<Node> allNodes;
@@ -90,14 +91,14 @@ public class Pathfinding : MonoBehaviour
                         connectedNode.cameFrom = currentNode;
                         connectedNode.gScore = heldGScore;
                         connectedNode.hScore = Vector2.Distance(connectedNode.transform.position, end.transform.position);
-                        
+
                         if (!openSet.Contains(connectedNode))
                         {
                             openSet.Add(connectedNode);
                         }
                     }
                 }
-            }   
+            }
         }
 
         return null;
@@ -122,7 +123,7 @@ public class Pathfinding : MonoBehaviour
         {
             for (int y = -1; y < 2; y++)
             {
-                if (x == 0 || y == 0) 
+                if (x == 0 || y == 0)
                 {
                     Vector2 connectionPosition = (Vector2)current.transform.position + new Vector2(x, y);
 

@@ -7,13 +7,17 @@ public class TurnManager : MonoBehaviour
 {
     [SerializeField] GameObject stump;
     [SerializeField] GameObject bearTrap;
+    [SerializeField] Player player;
     [SerializeField] int stumpPlaceLimit = 5;
     [SerializeField] int trapPlaceLimit = 5;
-    [SerializeField] int turnsRemaining = 5;
+    [SerializeField] float timeBetweenTurns = 0.5f;
 
     bool turnHappening;
     public bool TurnHappening { get { return turnHappening; } set { turnHappening = value; } }
-    public int TurnsRemaining { get { return turnsRemaining; } set { turnsRemaining = value; } }
+    int turnCount = 0;
+    public int TurnCount { get { return turnCount; } set { turnCount = value; } }
+    bool hasWaited = true;
+    float timeWaited = 0;
 
     GameObject selectedObject;
     InputAction mouseClick;
@@ -32,9 +36,13 @@ public class TurnManager : MonoBehaviour
     void Update()
     {
         turnHappening = false;
-        if (mouseClick.WasPerformedThisFrame() && turnsRemaining > 0)
+        if (mouseClick.WasPerformedThisFrame())
         {
             PlaceObject(selectedObject);
+        }
+        else if (stumpPlaceLimit <= 0 && trapPlaceLimit <= 0 && hasWaited)
+        {
+            TurnStarts();
         }
         else if (deselectObject.WasPerformedThisFrame())
         {
@@ -44,13 +52,14 @@ public class TurnManager : MonoBehaviour
         if (waitTurn.WasPerformedThisFrame())
         {
             TurnStarts();
-            turnsRemaining--;
         }
 
         if (resetLevel.WasPerformedThisFrame())
         {
             ResetLevel();
         }
+
+        WaitBeforeNextTurn();
     }
 
     Vector2 MousePosition()
@@ -63,23 +72,46 @@ public class TurnManager : MonoBehaviour
     void TurnStarts()
     {
         turnHappening = true;
+        turnCount++;
     }
 
     void PlaceObject(GameObject obj)
     {
         if (obj == stump && stumpPlaceLimit > 0)
         {
-            Instantiate(obj, MousePosition(), quaternion.identity);
+            GameObject placedObject = Instantiate(obj, MousePosition(), quaternion.identity);
+            if (player.playerPath == null)
+            {
+                Destroy(placedObject);
+                return;
+            }
             TurnStarts();
             stumpPlaceLimit--;
-            turnsRemaining--;
         }
         else if (obj == bearTrap && trapPlaceLimit > 0)
         {
-            Instantiate(obj, MousePosition(), quaternion.identity);
+            GameObject placedObject = Instantiate(obj, MousePosition(), quaternion.identity);
+            if (player.playerPath == null)
+            {
+                Destroy(placedObject);
+                return;
+            }
             TurnStarts();
             trapPlaceLimit--;
-            turnsRemaining--;
+        }
+    }
+
+    void WaitBeforeNextTurn()
+    {
+        timeWaited += Time.deltaTime;
+        if (timeWaited >= timeBetweenTurns)
+        {
+            hasWaited = true;
+            timeWaited = 0;
+        }
+        else
+        {
+            hasWaited = false;
         }
     }
 

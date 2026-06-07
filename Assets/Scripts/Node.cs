@@ -29,7 +29,7 @@ public class Node : MonoBehaviour
                 {
                     if (c != null)
                     {
-                        if (c.gameObject.layer == LayerMask.NameToLayer("Stump"))
+                        if (c.gameObject.layer == LayerMask.NameToLayer("Stump") || c.gameObject.layer == LayerMask.NameToLayer("Spider"))
                         {
                             nodeEnabled = false;
                             return;
@@ -41,6 +41,10 @@ public class Node : MonoBehaviour
                         if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
                         {
                             Pathfinding.Instance.player = this;
+                        }
+                        else if (c.gameObject.layer == LayerMask.NameToLayer("Spider"))
+                        {
+                            Pathfinding.Instance.spider = this;
                         }
                     }
                 }
