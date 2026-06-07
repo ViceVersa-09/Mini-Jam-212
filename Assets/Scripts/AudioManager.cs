@@ -10,7 +10,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
 
     [Header("Clips")]
-    [SerializeField] AudioClip musicClip;
+    [SerializeField] public AudioClip music;
+    [SerializeField] public AudioClip button;
+    [SerializeField] public AudioClip log;
+    [SerializeField] public AudioClip trap;
+    [SerializeField] public AudioClip spider;
 
     public static AudioManager instance;
 
@@ -31,7 +35,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        musicSource.clip = musicClip;
+        musicSource.clip = music;
         musicSource.Play();
 
         SetMixers();
