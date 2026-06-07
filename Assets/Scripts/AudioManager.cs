@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     [Header("Clips")]
     [SerializeField] public AudioClip music;
     [SerializeField] public AudioClip button;
-    [SerializeField] public AudioClip log;
+    [SerializeField] public AudioClip stump;
     [SerializeField] public AudioClip trap;
     [SerializeField] public AudioClip lose;
     [SerializeField] public AudioClip win;

@@ -102,7 +102,7 @@ public class TurnManager : MonoBehaviour
 
             if (audioManager != null)
             {
-                audioManager.PlaySFX(audioManager.log);
+                audioManager.PlaySFX(audioManager.stump);
             }
         }
         else if (obj == bearTrap && trapPlaceLimit > 0)
