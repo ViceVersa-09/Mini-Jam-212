@@ -14,11 +14,15 @@ public class Player : MonoBehaviour
     bool traped = false;
 
     TurnManager turnManager;
+    Animator animator;
     public Node finish;
+
+    public Vector2 moveVector;
 
     void Awake()
     {
         turnManager = FindAnyObjectByType<TurnManager>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -34,6 +38,7 @@ public class Player : MonoBehaviour
         {
             traped = false;
         }
+        UpdateAnimations();
     }
 
     void FindNode()
@@ -59,9 +64,18 @@ public class Player : MonoBehaviour
             {
                 float speed = Vector2.Distance(transform.position, playerPath[1].transform.position) * moveSpeed;
                 transform.position = Vector2.MoveTowards(transform.position, playerPath[1].transform.position, Mathf.Clamp(speed, moveSpeed / 50, 1));
+                if (playerPath[1].transform.position.x - transform.position.x != 0)
+                {
+                    moveVector.x = Mathf.Sign(playerPath[1].transform.position.x - transform.position.x);
+                }
+                if (playerPath[1].transform.position.y - transform.position.y != 0)
+                {
+                    moveVector.y = Mathf.Sign(playerPath[1].transform.position.y - transform.position.y);
+                }
                 yield return new WaitForEndOfFrame();
             }
             playerCollider.enabled = true;
+            moveVector = Vector2.zero;
         }
     }
 
@@ -80,6 +94,30 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    void UpdateAnimations()
+    {
+        if (moveVector == Vector2.zero) // Idle
+        {
+            animator.SetInteger("State", 0);
+        }
+        else if (moveVector.x > 0) // Right
+        {
+            animator.SetInteger("State", 3);
+        }
+        else if (moveVector.x < 0) // Left
+        {
+            animator.SetInteger("State", 4);
+        }
+        else if (moveVector.y > 0) // Up
+        {
+            animator.SetInteger("State", 2);
+        }
+        else if (moveVector.y < 0) // Down
+        {
+            animator.SetInteger("State", 1);
         }
     }
 
